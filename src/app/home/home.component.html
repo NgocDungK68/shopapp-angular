@@ -1,0 +1,54 @@
+<style>
+    .intro-section {
+        text-align: center;
+        color: white;
+        padding: 20px;
+    }
+    .search-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .product-category {
+        width: 200px;
+    }
+    .search-input {
+        width: 300px;
+        background-color: rgb(19, 23, 42);
+        margin-right: 10px;
+        border-color: rgba(255, 255, 255, 0.5);
+        color: white;
+    }
+    .form-control {
+        background-color: transparent;
+        color: white;
+    }
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        opacity: 1;
+    }
+    .form-control:-ms-input-placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .form-control::-ms-input-placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+</style>
+<div class="container">
+    <div class="intro-section">
+        <h1>Đây là trang Home</h1>
+        <p>Trang này hiển thị danh sách các sản phẩm, kèm ảnh</p>
+        <p>Các bạn có thể chọn xem sản phẩm và mua hàng tại đây</p>
+    </div>
+    <!-- Đoạn này có 1 ô searchbox bên trái, 1 combobox bên phải -->
+    <div class="search-box">
+        <input type="text" class="form-control search-input" placeholder="Tìm sản phẩm" />
+        <select class="form-control product-category" >
+            <option selected disabled>Danh mục sản phẩm</option>
+            <option>Đồ điện tử</option>
+            <option>Đồ gia dụng</option>
+            <option>Bánh kẹo</option>
+        </select>
+    </div>
+</div>
