@@ -1,5 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { RegisterDTO } from '../dtos/register.dto';
 
 @Component({
   selector: 'app-register',
@@ -13,19 +17,22 @@ export class RegisterComponent {
   password: string;
   retypePassword: string;
   fullName: string;
-  address: string;
+  address: string; 
   isAccepted: boolean;
   dateOfBirth: Date;
 
-  constructor() {
+  constructor(private router: Router, private UserService: UserService) {
     this.phone = '';
     this.password = '';
     this.retypePassword = '';
     this.fullName = '';
     this.address = '';
-    this.isAccepted = false;
+    this.isAccepted = true;
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
+
+    // inject
+
   }
 
   onPhoneChange() {
@@ -43,7 +50,33 @@ export class RegisterComponent {
                     `isAccepted: ${this.isAccepted}` +
                     `dateOfBirth: ${this.dateOfBirth}`;
 
-    alert(message);
+    // alert(message);
+    debugger
+    const registerDTO:RegisterDTO = {
+      "fullname": this.fullName,
+      "phone_number": this.phone,
+      "address": this.address,
+      "password": this.password,
+      "retype_password": this.retypePassword,
+      "date_of_birth": this.dateOfBirth,
+      "facebook_account_id": 0,
+      "google_account_id": 0,
+      "role_id": 2
+    }
+
+    this.UserService.register(registerDTO).subscribe({
+        next: (response: any) => {
+          debugger
+          this.router.navigate(['/login']);
+        },
+        complete: () => {
+          debugger
+        },
+        error: (error: any) => {
+          alert(`Cannot register, error: ${error.error}`);
+        }
+      }
+    );
   }
 
   // check password match
