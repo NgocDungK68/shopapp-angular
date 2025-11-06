@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { RegisterDTO } from '../dtos/register.dto';
+import { RegisterDTO } from '../dtos/user/register.dto';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +12,7 @@ import { RegisterDTO } from '../dtos/register.dto';
 export class RegisterComponent {
   @ViewChild('registerForm') registerForm!: NgForm;
   // Khai báo các biến tương ứng với các trường dữ liệu trong form
-  phone: string;
+  phoneNumber: string;
   password: string;
   retypePassword: string;
   fullName: string;
@@ -21,8 +20,8 @@ export class RegisterComponent {
   isAccepted: boolean;
   dateOfBirth: Date;
 
-  constructor(private router: Router, private UserService: UserService) {
-    this.phone = '';
+  constructor(private router: Router, private userService: UserService) {
+    this.phoneNumber = '';
     this.password = '';
     this.retypePassword = '';
     this.fullName = '';
@@ -35,14 +34,14 @@ export class RegisterComponent {
 
   }
 
-  onPhoneChange() {
-    console.log(`Phone typed: ${this.phone}`);
+  onPhoneNumberChange() {
+    console.log(`Phone typed: ${this.phoneNumber}`);
 
     // validate phone must be at least 6 characters
   }
 
   register() {
-    const message = `phone: ${this.phone}` + 
+    const message = `phone: ${this.phoneNumber}` + 
                     `password: ${this.password}` +
                     `retypePassword: ${this.retypePassword}` +
                     `address: ${this.address}` + 
@@ -54,7 +53,7 @@ export class RegisterComponent {
     debugger
     const registerDTO:RegisterDTO = {
       "fullname": this.fullName,
-      "phone_number": this.phone,
+      "phone_number": this.phoneNumber,
       "address": this.address,
       "password": this.password,
       "retype_password": this.retypePassword,
@@ -64,7 +63,7 @@ export class RegisterComponent {
       "role_id": 2
     }
 
-    this.UserService.register(registerDTO).subscribe({
+    this.userService.register(registerDTO).subscribe({
         next: (response: any) => {
           debugger
           this.router.navigate(['/login']);

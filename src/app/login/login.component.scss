@@ -69,13 +69,14 @@
 
 .register-link {
     color: rgb(105, 244, 181);
-    text-emphasis: none;
+    text-decoration: none;
 }
 
 .access-right {
     margin-top: 20px;
     width: 200px;
     color: white;
+    background-color: rgb(12, 12, 55) !important;
     border: 1px solid rgb(225, 64, 180);
 }
 
