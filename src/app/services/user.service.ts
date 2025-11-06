@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 export class UserService {
   private apiRegister = `${environment.apiBaseUrl}/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
-  
+
   private apiConfig = {
     headers: this.createHeaders()
   }
@@ -20,7 +20,8 @@ export class UserService {
 
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept-Language': 'vi'
     });
   }
 
