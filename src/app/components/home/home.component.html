@@ -7,13 +7,18 @@
     </div>
     <!-- Đoạn này có 1 ô searchbox bên trái, 1 combobox bên phải -->
     <div class="search-box">
-        <input type="text" class="form-control search-input" placeholder="Tìm sản phẩm" />
-        <select class="form-control product-category" >
-            <option selected disabled>Danh mục sản phẩm</option>
-            <option>Đồ điện tử</option>
-            <option>Đồ gia dụng</option>
-            <option>Bánh kẹo</option>
+        <input type="text" 
+            class="form-control search-input" 
+            placeholder="Tìm sản phẩm" 
+            [(ngModel)]="keyword">
+        <select class="form-control product-category" 
+            [(ngModel)]="selectedCategoryId">
+            <option [value]="0">Tất cả</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+            </option>
         </select>
+        <button class="btn btn-primary" (click)="searchProducts()">Tìm kiếm</button>
     </div>
     <div class="row">
         <div class="col-lg-4 col-md-6" *ngFor="let product of products">
@@ -48,13 +53,11 @@
             <li class="page-item" *ngIf="currentPage > 1">
                 <a class="page-link" href="#" (click)="onPageChange(currentPage - 1)">Previous</a>
             </li>
-            <li>
-                <ng-container *ngFor="let page of visiblePages">
-            <li class="page-item" [ngClass]="{'active': page === currentPage}">
-                <a class="page-link" href="#" (click)="onPageChange(currentPage + 1)">Next</a>
-            </li>
+            <ng-container *ngFor="let page of visiblePages">
+                <li class="page-item" [ngClass]="{'active': page === currentPage}">
+                    <a class="page-link" href="#" (click)="onPageChange(page)">{{ page }}</a>
+                </li>
             </ng-container>
-            </li>
             <li class="page-item" *ngIf="currentPage < totalPages">
                 <a class="page-link" href="#" (click)="onPageChange(currentPage + 1)">Next</a>
             </li>
