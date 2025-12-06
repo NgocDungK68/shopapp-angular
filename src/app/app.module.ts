@@ -11,6 +11,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     RegisterComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule
@@ -35,6 +37,6 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
       multi: true
     }
   ],
-  bootstrap: [OrderConfirmComponent]
+  bootstrap: [OrderComponent]
 })
 export class AppModule { }
