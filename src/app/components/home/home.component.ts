@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { Product } from '../../models/product';
 import { Category } from 'src/app/models/category';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   totalPages: number = 0;
   visiblePages: number[] = [];
   keyword: string = "";
+  router: Router = inject(Router);
 
   constructor(private productService: ProductService, private categoryService: CategoryService) { }
 
@@ -93,5 +95,10 @@ export class HomeComponent implements OnInit {
     }
 
     return new Array(endPage - startPage + 1).fill(0).map((_, index) => startPage + index);
+  }
+
+  onProductClick(productId: number) {
+    debugger
+    this.router.navigate(['/products', productId]);
   }
 }
