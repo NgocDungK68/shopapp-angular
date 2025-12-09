@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { TokenService } from '../../services/token.service';
 import { Router } from '@angular/router';
 import { LoginResponse } from '../../responses/user/login.response';
+import { UserResponse } from '../../responses/user/user.response';
 import { RoleService } from '../../services/role.service';
 import { Role } from '../../models/role';
 
@@ -21,6 +22,7 @@ export class LoginComponent {
   roles: Role[] = [];
   rememberMe: boolean = true;
   selectedRole: Role | undefined;
+  userResponse?: UserResponse;
 
   constructor(
     private router: Router,
@@ -69,8 +71,25 @@ export class LoginComponent {
           const {token} = response;
           if (this.rememberMe) {
             this.tokenService.setToken(token);
+            this.userService.getUserDetail(token).subscribe({
+              next: (response: any) => {
+                debugger
+                this.userResponse = {
+                  ...response,
+                  date_of_birth: new Date(response.date_of_birth)
+                };
+                this.userService.saveUserToLocalStorage(this.userResponse);
+                this.router.navigate(['/']);
+              },
+              complete: () => {
+                debugger
+              },
+              error: (error: any) => {
+                debugger
+                alert(error.error.message);
+              }
+            })
           }
-          // this.router.navigate(['/login']);
         },
         complete: () => {
           debugger
