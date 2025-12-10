@@ -25,3 +25,23 @@ header {
     background-color: rgb(127, 68, 255) !important;
     color: white !important;
 }
+
+.popover-list {
+    padding: 0px 10px 0px 10px;
+}
+
+.popover-body {
+    padding: 0px;
+}
+
+.popover-item {
+    display: block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+.popover-item:hover {
+    background-color: #f0f0f0;
+    color: red;    
+}

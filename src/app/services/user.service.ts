@@ -14,6 +14,7 @@ export class UserService {
   private apiRegister = `${environment.apiBaseUrl}/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
   private apiUserDetail = `${environment.apiBaseUrl}/users/details`;
+  localStorage?:Storage;
 
   constructor(
     private http: HttpClient,
@@ -50,10 +51,10 @@ export class UserService {
       console.log('User response saved to local storage.');
     } catch (error) {
       console.error('Error saving user response to local storage:', error);
-    }
+    } 
   }
 
-  getUserResponseFromLocalStorage() {
+  getUserResponseFromLocalStorage(): UserResponse | null {
     try {
       const userResponseJSON = localStorage.getItem('user');
       if (userResponseJSON == null || userResponseJSON == undefined) {
@@ -66,6 +67,17 @@ export class UserService {
     } catch (error) {
       console.error('Error retrieving user response from local storage:', error);
       return null;
+    }
+  }
+
+  removeUserFromLocalStorage():void {
+    try {
+      // Remove the user data from local storage using the key
+      this.localStorage?.removeItem('user');
+      console.log('User data removed from local storage.');
+    } catch (error) {
+      console.error('Error removing user data from local storage:', error);
+      // Handle the error as needed
     }
   }
 }

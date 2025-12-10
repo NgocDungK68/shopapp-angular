@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app/app.component';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     RouterOutlet,
     RouterLink,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbPopoverModule
 ],
   providers: [
     {

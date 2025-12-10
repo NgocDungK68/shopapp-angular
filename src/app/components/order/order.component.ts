@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDTO } from 'src/app/dtos/order/order.dto';
 import { environment } from 'src/app/environments/environment';
+import { Order } from 'src/app/models/order';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-order',
@@ -36,6 +39,10 @@ export class OrderComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private orderService: OrderService,
+    private tokenService: TokenService,
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.orderForm = this.fb.group({
@@ -50,12 +57,20 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger
+    this.orderData.user_id = this.tokenService.getUserId();
+
     // Lấy danh sách sản phẩm từ giỏ hàng
     debugger
     const cart = this.cartService.getCart();
     const productIds = Array.from(cart.keys());  // Chuyển danh sách ID từ Map giỏ hàng
+
     // Gọi service để lấy thông tin sản phẩm dựa trên danh sách ID
     debugger
+    if (productIds.length === 0) {
+      return;
+    }
+
     this.productService.getProductsByIds(productIds).subscribe({
       next: (products) => {
         debugger
@@ -99,10 +114,14 @@ export class OrderComponent implements OnInit {
         quantity: cartItem.quantity
       }));
 
+      this.orderData.total_money = this.totalAmount;
+
       this.orderService.placeOrder(this.orderData).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           debugger
-          console.log('Đặt hàng thành công');
+          alert('Đặt hàng thành công');
+          this.cartService.clearCart();
+          this.router.navigate(['/']);
         },
         complete: () => {
           debugger
@@ -110,9 +129,11 @@ export class OrderComponent implements OnInit {
         },
         error: (error: any) => {
           debugger;
-          console.error("Lỗi khi đặt hàng:", error);
+          alert(`Lỗi khi đặt hàng: ${error}`);
         }
       });
+    } else {
+      alert('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.')
     }
   }
 
