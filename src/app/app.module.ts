@@ -17,6 +17,7 @@ import { AppComponent } from './app/app.component';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,
-    AppComponent
+    AppComponent,
+    AdminComponent
   ],
   imports: [
     ReactiveFormsModule,
