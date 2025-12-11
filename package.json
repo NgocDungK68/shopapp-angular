@@ -20,7 +20,7 @@
     "@angular/router": "^16.2.12",
     "@auth0/angular-jwt": "^5.2.0",
     "@fortawesome/fontawesome-free": "^7.1.0",
-    "@ng-bootstrap/ng-bootstrap": "^19.0.1",
+    "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "class-transformer": "^0.5.1",

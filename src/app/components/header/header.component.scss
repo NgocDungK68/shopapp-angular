@@ -26,6 +26,11 @@ header {
     color: white !important;
 }
 
+.nav-item.active {
+    background-color: rgb(127, 68, 255) !important;
+    color: white !important;
+}
+
 .popover-list {
     padding: 0px 10px 0px 10px;
 }
@@ -43,5 +48,5 @@ header {
 
 .popover-item:hover {
     background-color: #f0f0f0;
-    color: red;    
+    color: rgb(127, 68, 255);    
 }

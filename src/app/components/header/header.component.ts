@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit {
   userResponse?: UserResponse | null;
   isPopoverOpen = false;
+  activeNavItem: number = 0;
 
   constructor(
     private userService: UserService,
@@ -23,6 +24,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
+  }
+  
+  setActiveNavItem(index: number) {
+    this.activeNavItem = index;
   }
 
   togglePopover(event: Event): void {

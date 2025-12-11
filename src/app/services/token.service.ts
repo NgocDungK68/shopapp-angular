@@ -7,11 +7,12 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 export class TokenService {
   private readonly TOKEN_KEY = 'access_token';
   private jwtHelperService = new JwtHelperService();
+  localStorage?:Storage;
   
   constructor() {}
 
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+  getToken(): string {
+    return this.localStorage?.getItem(this.TOKEN_KEY) ?? '';
   }
 
   setToken(token: string): void {

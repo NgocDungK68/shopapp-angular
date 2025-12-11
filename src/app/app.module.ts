@@ -8,6 +8,7 @@ import { DetailProductComponent } from './components/detail-product/detail-produ
 import { OrderDetailComponent } from './components/order-detail/order.detail.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UserProfileComponent } from './components/user-profile/user.profile.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
@@ -27,6 +28,7 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     OrderDetailComponent,
     LoginComponent,
     RegisterComponent,
+    UserProfileComponent,
     AppComponent
   ],
   imports: [

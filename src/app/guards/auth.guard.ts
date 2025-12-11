@@ -33,7 +33,7 @@ export class AuthGuard {
   }
 }
 
-// Sử dụng functional guard như sau:
+// Sử dụng functional guard như sau
 export const AuthGuardFn: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {  
   return inject(AuthGuard).canActivate(next, state);
 }
