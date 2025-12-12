@@ -4,23 +4,17 @@ import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 import { UserResponse } from 'src/app/responses/user/user.response';
 import { TokenService } from 'src/app/services/token.service';
 import { UserService } from 'src/app/services/user.service';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent extends BaseComponent implements OnInit {
   userResponse?: UserResponse | null;
   isPopoverOpen = false;
   activeNavItem: number = 0;
-
-  constructor(
-    private userService: UserService,
-    private tokenService: TokenService,
-    private router: Router,
-    private popoverConfig: NgbPopoverConfig
-  ) { }
 
   ngOnInit(): void {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();

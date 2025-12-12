@@ -9,9 +9,11 @@ import { RoleService } from '../../services/role.service';
 import { CartService } from '../../services/cart.service';
 import { OrderService } from '../../services/order.service';
 import { Location } from '@angular/common';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
+import { ToastService } from 'src/app/services/toast.service';
 
 export class BaseComponent {
+    toastService = inject(ToastService);
     router: Router = inject(Router);
     categoryService: CategoryService = inject(CategoryService);
     productService: ProductService = inject(ProductService);

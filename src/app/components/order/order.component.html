@@ -4,61 +4,53 @@
         <h1>Đây là trang order</h1>
         <p>Sử dụng bootstrap</p>
     </div>
-    <form [formGroup]="orderForm">     <!-- Thêm form và gán formGroup -->
+    <form [formGroup]="orderForm"> <!-- Thêm form và gán formGroup -->
         <div class="row">
             <div class="col-md-6">
                 <h2 class="product-header">Thông tin người nhận</h2>
-                    <div class="mb-3">
-                        <label for="fullname" class="form-label">Họ và tên</label>
-                        <input type="text"
-                            formControlName="fullname"
-                            class="form-control" 
-                            id="fullname"
-                            [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
-                        <div 
-                            *ngIf="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched"
-                            class="invalid-feedback">
-                            Họ và tên là trường bắt buộc
-                        </div>
+                <div class="mb-3">
+                    <label for="fullname" class="form-label">Họ và tên</label>
+                    <input type="text" formControlName="fullname" class="form-control" id="fullname"
+                        [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
+                    <div *ngIf="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched"
+                        class="invalid-feedback">
+                        Họ và tên là trường bắt buộc
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" 
-                            [(ngModel)]="orderData.email" placeholder="Email"
-                            class="form-control" id="email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control"
-                            [(ngModel)]="orderData.phone_number" placeholder="Số điện thoại" required
-                            id="phone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control"
-                            [(ngModel)]="orderData.address" placeholder="Địa chỉ" required
-                            id="address">
-                    </div>
-                    <div class="mb-3">
-                        <label for="note" class="form-label">Ghi chú</label>
-                        <input type="text" class="form-control"
-                            [(ngModel)]="orderData.note" placeholder="Ghi chú" required
-                            id="note">
-                    </div>
-                    <div class="mb-3">
-                        <label for="shippingMethod" class="form-label">Phương thức vận chuyển</label>
-                        <select class="form-control" id="shippingMethod" [(ngModel)]="orderData.shipping_method">
-                            <option value="express">Nhanh (Express)</option>
-                            <option value="normal">Thường (Normal)</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
-                        <select class="form-control" id="paymentMethod" [(ngModel)]="orderData.payment_method">
-                            <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-                            <option value="other">Thanh toán khác</option>
-                        </select>
-                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" [(ngModel)]="orderData.email" placeholder="Email" class="form-control"
+                        id="email">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Số điện thoại</label>
+                    <input type="text" class="form-control" [(ngModel)]="orderData.phone_number"
+                        placeholder="Số điện thoại" required id="phone">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Địa chỉ</label>
+                    <input type="text" class="form-control" [(ngModel)]="orderData.address" placeholder="Địa chỉ"
+                        required id="address">
+                </div>
+                <div class="mb-3">
+                    <label for="note" class="form-label">Ghi chú</label>
+                    <input type="text" class="form-control" [(ngModel)]="orderData.note" placeholder="Ghi chú" required
+                        id="note">
+                </div>
+                <div class="mb-3">
+                    <label for="shippingMethod" class="form-label">Phương thức vận chuyển</label>
+                    <select class="form-control" id="shippingMethod" [(ngModel)]="orderData.shipping_method">
+                        <option value="express">Nhanh (Express)</option>
+                        <option value="normal">Thường (Normal)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
+                    <select class="form-control" id="paymentMethod" [(ngModel)]="orderData.payment_method">
+                        <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+                        <option value="other">Thanh toán khác</option>
+                    </select>
+                </div>
             </div>
             <div class="col-md-6">
                 <h2 class="product-order">Sản phẩm đã đặt hàng</h2>
@@ -72,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let item of cartItems">
+                        <ng-container *ngFor="let item of cartItems; let i = index">
                             <tr>
                                 <td>
                                     <div class="product-info">
@@ -80,7 +72,15 @@
                                         <span class="product-name">{{ item.product.name }}</span>
                                     </div>
                                 </td>
-                                <td>{{ item.quantity }}</td>
+                                <td>
+                                    <div class="product-quantity">
+                                        <div class="border-wrapper">
+                                            <button (click)="decreaseQuantity(i)">-</button>
+                                            {{ item.quantity }}
+                                            <button (click)="increaseQuantity(i)">+</button>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>{{ item.product.price | number:'1.2-2' }}</td>
                                 <td>{{ (item.product.price * item.quantity) | number:'1.2-2' }}</td>
                             </tr>
@@ -90,7 +90,7 @@
                 <div class="text-start mt-3">
                     <h4 class="header-text text-end">Tổng giá: {{ totalAmount | number:'1.2-2' }}</h4>
                 </div>
-                <div class=""mt-3>
+                <div class="" mt-3>
                     <h4 class="product-header">Nhập coupon</h4>
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Nhập coupon">

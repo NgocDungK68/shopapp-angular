@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../environments/environment";
 import { InsertCategoryDTO } from "../dtos/category/insert.category.dto";
 import { UpdateCategoryDTO } from "../dtos/category/update.category.dto";
-import { Category } from "../models/category";
+import { ApiResponse } from "../responses/api.response";
 
 @Injectable({
     providedIn: 'root'
@@ -14,28 +14,28 @@ export class CategoryService {
 
     constructor(private http: HttpClient) { }
 
-    getCategories(page: number, limit: number): Observable<Category[]> {
+    getCategories(page: number, limit: number): Observable<ApiResponse> {
         const params = new HttpParams()
             .set('page', page.toString())
             .set('limit', limit.toString());
-        return this.http.get<Category[]>(`${environment.apiBaseUrl}/categories`, { params });
+        return this.http.get<ApiResponse>(`${environment.apiBaseUrl}/categories`, { params });
     }
 
-    getDetailCategory(id: number): Observable<Category[]> {
-        return this.http.get<Category[]>(`${this.apiBaseUrl}/categories/${id}`);
+    getDetailCategory(id: number): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`);
     }
 
-    deleteCategory(id: number): Observable<Category[]> {
+    deleteCategory(id: number): Observable<ApiResponse> {
         debugger
-        return this.http.delete<Category[]>(`${this.apiBaseUrl}/categories/${id}`);
+        return this.http.delete<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`);
     }
 
-    updateCategory(id: number, updatedCategory: UpdateCategoryDTO): Observable<Category[]> {
-        return this.http.put<Category[]>(`${this.apiBaseUrl}/categories/${id}`, updatedCategory);
+    updateCategory(id: number, updatedCategory: UpdateCategoryDTO): Observable<ApiResponse> {
+        return this.http.put<ApiResponse>(`${this.apiBaseUrl}/categories/${id}`, updatedCategory);
     }
 
-    insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<Category[]> {
+    insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<ApiResponse> {
         // Add a new category
-        return this.http.post<Category[]>(`${this.apiBaseUrl}/categories`, insertCategoryDTO);
+        return this.http.post<ApiResponse>(`${this.apiBaseUrl}/categories`, insertCategoryDTO);
     }
 }

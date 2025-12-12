@@ -1,18 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { CategoryService } from 'src/app/services/category.service';
 import { Product } from '../../models/product';
 import { Category } from 'src/app/models/category';
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import { BaseComponent } from '../base/base.component';
+import { ApiResponse } from 'src/app/responses/api.response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent extends BaseComponent implements OnInit {
   products: Product[] = [];
   categories: Category[] = [];
   selectedCategoryId: number = 0;
@@ -21,10 +21,13 @@ export class HomeComponent implements OnInit {
   pages: number[] = [];
   totalPages: number = 0;
   visiblePages: number[] = [];
+  localStorage?: Storage | undefined;
   keyword: string = "";
-  router: Router = inject(Router);
 
-  constructor(private productService: ProductService, private categoryService: CategoryService) { }
+  constructor() {
+    super();
+    this.localStorage = this.document.defaultView?.localStorage;
+  }
 
   ngOnInit() {
     this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
@@ -33,15 +36,19 @@ export class HomeComponent implements OnInit {
   
   getCategories(page: number, limit: number) {
     this.categoryService.getCategories(page, limit).subscribe({
-      next: (categories: Category[]) => {
+      next: (apiResponse: ApiResponse) => {
         debugger
-        this.categories = categories;
+        this.categories = apiResponse.data;
       },
       complete: () => {
         debugger;
       },
-      error: (error: any) => {
-        console.error('Error fetching categories:', error);
+      error: (error: HttpErrorResponse) => {
+        this.toastService.showToast({
+          error: error,
+          defaultMsg: 'Lỗi tải danh mục sản phẩm',
+          title: 'Lỗi Tải Dữ Liệu'
+        });
       }
     });
   }
@@ -49,17 +56,20 @@ export class HomeComponent implements OnInit {
   searchProducts() {
     this.currentPage = 0;
     this.itemsPerPage = 12;
-    debugger
     this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+    this.router.navigate(['/home'], { 
+      queryParams: 
+      { keyword: this.keyword, categoryId: this.selectedCategoryId, page: this.currentPage } 
+    });
   }
 
   getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
     debugger
     this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
-      next: (response: any) => {
+      next: (apiResponse: ApiResponse) => {
         debugger
+        const response = apiResponse.data;
         response.products.forEach((product: Product) => {
-          debugger
           product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
         });
 
@@ -70,9 +80,12 @@ export class HomeComponent implements OnInit {
       complete: () => {
         debugger;
       },
-      error: (error: any) => {
-        debugger;
-        console.error('Error fetching products:', error);
+      error: (error: HttpErrorResponse) => {
+        this.toastService.showToast({
+          error: error,
+          defaultMsg: 'Lỗi tải danh sách sản phẩm',
+          title: 'Lỗi Tải Dữ Liệu'
+        });
       }
     });
   }
@@ -81,20 +94,7 @@ export class HomeComponent implements OnInit {
     debugger;
     this.currentPage = page;
     this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
-  }
-
-  generateVisiblePageArray(currentPage: number, totalPages: number): number[] {
-    const maxVisiblePages = 5;
-    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-
-    let startPage = Math.max(currentPage - halfVisiblePages, 1);
-    let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
-
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(endPage - maxVisiblePages + 1, 1);
-    }
-
-    return new Array(endPage - startPage + 1).fill(0).map((_, index) => startPage + index);
+    this.router.navigate(['/home'], { queryParams: { page: this.currentPage } });
   }
 
   onProductClick(productId: number) {

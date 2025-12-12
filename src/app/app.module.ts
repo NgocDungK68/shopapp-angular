@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OrderComponent } from './components/order/order.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
-import { OrderDetailComponent } from './components/order-detail/order.detail.component';
+import { DetailOrderComponent } from './components/detail-order/detail-order.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user.profile.component';
@@ -32,7 +32,7 @@ import { AdminModule } from './components/admin/admin.module';
     FooterComponent,
     OrderComponent,
     DetailProductComponent,
-    OrderDetailComponent,
+    DetailOrderComponent,
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,
@@ -55,7 +55,7 @@ import { AdminModule } from './components/admin/admin.module';
     NgbPopoverModule,
     NgbModule,
     AdminModule
-],
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

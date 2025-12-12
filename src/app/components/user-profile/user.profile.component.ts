@@ -10,11 +10,6 @@ import {
 
 import { UserResponse } from '../../responses/user/user.response';
 import { UpdateUserDTO } from '../../dtos/user/update.user.dto';
-
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
@@ -29,7 +24,6 @@ export class UserProfileComponent extends BaseComponent implements OnInit {
   token:string = '';
   formBuilder: FormBuilder = inject(FormBuilder);
   
-
   userProfileForm: FormGroup = this.formBuilder.group({
     fullname: [''],     
     address: ['', [Validators.minLength(3)]],       

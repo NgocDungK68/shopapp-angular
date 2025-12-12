@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/app/environments/environment';
 import { OrderDetail } from 'src/app/models/order.detail';
-import { Product } from 'src/app/models/product';
 import { OrderResponse } from 'src/app/responses/order/order.response';
-import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
-import { ProductService } from 'src/app/services/product.service';
 
 @Component({
-  selector: 'app-order-detail',
-  templateUrl: './order.detail.component.html',
-  styleUrls: ['./order.detail.component.scss']
+  selector: 'app-detail-order',
+  templateUrl: './detail-order.component.html',
+  styleUrls: ['./detail-order.component.scss']
 })
-export class OrderDetailComponent implements OnInit {
+export class DetailOrderComponent implements OnInit {
   orderResponse: OrderResponse = {
     id: 0,
     user_id: 0,

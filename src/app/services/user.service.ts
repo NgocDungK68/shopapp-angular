@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RegisterDTO } from '../dtos/user/register.dto';
@@ -8,6 +8,7 @@ import { HttpUtilService } from './http.util.service';
 import { UserResponse } from '../responses/user/user.response';
 import { UpdateUserDTO } from '../dtos/user/update.user.dto';
 import { ApiResponse } from '../responses/api.response';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -16,31 +17,37 @@ export class UserService {
   private apiRegister = `${environment.apiBaseUrl}/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
   private apiUserDetail = `${environment.apiBaseUrl}/users/details`;
-  localStorage?:Storage;
 
-  constructor(
-    private http: HttpClient,
-    private httpUtilService: HttpUtilService
-  ) { }
+  private http = inject(HttpClient);
+  private httpUtilService = inject(HttpUtilService);  
+
+  localStorage?: Storage;
+
+  constructor(        
+    @Inject(DOCUMENT) private document: Document
+  ) { 
+    this.localStorage = document.defaultView?.localStorage;
+  }
 
   private apiConfig = {
     headers: this.httpUtilService.createHeaders()
   }
-  register(registerDTO: RegisterDTO):Observable<any> {
-    return this.http.post(this.apiRegister, registerDTO, this.apiConfig);
+
+  register(registerDTO: RegisterDTO): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiRegister, registerDTO, this.apiConfig);
   }
 
-  login(loginDTO: LoginDTO):Observable<any> {
-    return this.http.post(this.apiLogin, loginDTO, this.apiConfig);
+  login(loginDTO: LoginDTO): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiLogin, loginDTO, this.apiConfig);
   }
 
-  getUserDetail(token: string) {
-    return this.http.post(this.apiUserDetail, {
+  getUserDetail(token: string): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiUserDetail, null, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       })
-    })
+    });
   }
 
   updateUserDetail(token: string, updateUserDTO: UpdateUserDTO): Observable<ApiResponse>  {
@@ -59,7 +66,7 @@ export class UserService {
         return;
       }
       const userResponseJSON = JSON.stringify(userResponse);
-      localStorage.setItem('user', userResponseJSON);
+      this.localStorage?.setItem('user', userResponseJSON);
       console.log('User response saved to local storage.');
     } catch (error) {
       console.error('Error saving user response to local storage:', error);
@@ -68,7 +75,7 @@ export class UserService {
 
   getUserResponseFromLocalStorage(): UserResponse | null {
     try {
-      const userResponseJSON = localStorage.getItem('user');
+      const userResponseJSON = this.localStorage?.getItem('user');
       if (userResponseJSON == null || userResponseJSON == undefined) {
         return null;
       }
