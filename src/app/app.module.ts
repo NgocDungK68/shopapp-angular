@@ -18,6 +18,9 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './components/admin/admin.component';
+import { OrderAdminComponent } from './components/admin/order/order.admin.component';
+import { ProductAdminComponent } from './components/admin/product/product.admin.component';
+import { CategoryAdminComponent } from './components/admin/category/category.admin.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { AdminComponent } from './components/admin/admin.component';
     RegisterComponent,
     UserProfileComponent,
     AppComponent,
-    AdminComponent
+    AdminComponent,
+    OrderAdminComponent,
+    ProductAdminComponent,
+    CategoryAdminComponent
   ],
   imports: [
     ReactiveFormsModule,

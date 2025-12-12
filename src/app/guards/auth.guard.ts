@@ -25,7 +25,7 @@ export class AuthGuard {
     if (!isTokenExpired && isUserIdValid) {
       return true;
     } else {
-      // Nếu không authenticated, bạn có thể redirect hoặc trả về một UrlTree khác.
+      // Nếu không authenticated, có thể redirect hoặc trả về một UrlTree khác.
       // Ví dụ trả về trang login:
       this.router.navigate(['/login']);
       return false;

@@ -10,16 +10,20 @@ import { AuthGuardFn } from "./guards/auth.guard";
 import { UserProfileComponent } from "./components/user-profile/user.profile.component";
 import { AdminComponent } from "./components/admin/admin.component";
 import { AdminGuardFn } from "./guards/admin.guard";
+import { OrderAdminComponent } from "./components/admin/order/order.admin.component";
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'admin', component: AdminComponent, canActivate: [AdminGuardFn] },
     { path: 'register', component: RegisterComponent },
     { path: 'products/:id', component: DetailProductComponent },
     { path: 'orders', component: OrderComponent, canActivate: [AuthGuardFn] },
     { path: 'orders/:id', component: OrderDetailComponent },
-    { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuardFn] }
+    { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuardFn] },
+    // Admin
+    { path: 'admin', component: AdminComponent, canActivate: [AdminGuardFn] },
+    { path: 'admin/orders', component: OrderAdminComponent, canActivate: [AdminGuardFn] },
+
 ];
 
 @NgModule({
