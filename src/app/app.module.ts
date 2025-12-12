@@ -16,11 +16,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app/app.component';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './components/admin/admin.component';
 import { OrderAdminComponent } from './components/admin/order/order.admin.component';
 import { ProductAdminComponent } from './components/admin/product/product.admin.component';
 import { CategoryAdminComponent } from './components/admin/category/category.admin.component';
+import { DetailOrderAdminComponent } from './components/admin/detail-order/detail.order.admin.component';
+import { CommonModule } from '@angular/common';
+import { AdminModule } from './components/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -33,13 +36,15 @@ import { CategoryAdminComponent } from './components/admin/category/category.adm
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,
-    AppComponent,
-    AdminComponent,
-    OrderAdminComponent,
-    ProductAdminComponent,
-    CategoryAdminComponent
+    AppComponent
+    // AdminComponent,
+    // OrderAdminComponent,
+    // DetailOrderAdminComponent,
+    // ProductAdminComponent,
+    // CategoryAdminComponent
   ],
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     BrowserModule,
     FormsModule,
@@ -47,7 +52,9 @@ import { CategoryAdminComponent } from './components/admin/category/category.adm
     RouterOutlet,
     RouterLink,
     AppRoutingModule,
-    NgbPopoverModule
+    NgbPopoverModule,
+    NgbModule,
+    AdminModule
 ],
   providers: [
     {

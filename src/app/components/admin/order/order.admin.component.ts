@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { OrderResponse } from "src/app/responses/order/order.response";
 import { OrderService } from "src/app/services/order.service";
 
@@ -15,8 +16,11 @@ export class OrderAdminComponent implements OnInit {
     totalPages: number = 0;
     keyword: string = "";
     visiblePages: number[] = [];
+    router: Router = inject(Router);
 
-    constructor(private orderService: OrderService) {}
+    constructor(
+        private orderService: OrderService,
+    ) {}
 
     ngOnInit(): void {
         this.getAllOrders(this.keyword, this.currentPage, this.itemsPerPage);
@@ -58,5 +62,28 @@ export class OrderAdminComponent implements OnInit {
         }
 
         return new Array(endPage - startPage + 1).fill(0).map((_, index) => startPage + index);
+    }
+
+    deleteOrder(id: number) {
+        const confirmation = window.confirm("Are you sure you want to delete this order?");
+        if (confirmation) {
+            this.orderService.deleteOrder(id).subscribe({
+                next: (response: any) => {
+                    debugger
+                    location.reload();
+                },
+                complete: () => {
+                    debugger;
+                },
+                error: (error: any) => {
+                    console.error("Error deleting order:", error);
+                }
+            });
+        }
+    }
+
+    viewDetails(order: OrderResponse) {
+        debugger
+        this.router.navigate(['/admin/orders', order.id]);
     }
 }

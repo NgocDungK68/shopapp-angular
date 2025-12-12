@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <header class="header bg-success text-white d-flex justify-content-between">
-        <h1 class="header-title">Dashboard Header</h1>
+        <h1 class="header-title">Dashboard</h1>
 
         <!-- Logout Button -->
          <button class="btn btn-danger btn-sm" (click)="logout()">Log out</button>
@@ -29,11 +29,12 @@
         </nav>
         
         <div class="col-md-10 col-lg-10 overflow-auto">
-            <ng-container [ngSwitch]="adminComponent">
+            <!-- <ng-container [ngSwitch]="adminComponent">
                 <app-order-admin *ngSwitchCase="'orders'"></app-order-admin>
                 <app-product-admin *ngSwitchCase="'products'"></app-product-admin>
                 <app-category-admin *ngSwitchCase="'categories'"></app-category-admin>
-            </ng-container>
+            </ng-container> -->
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
