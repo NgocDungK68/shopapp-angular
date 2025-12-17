@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localeVi from '@angular/common/locales/vi';
 import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -17,13 +18,10 @@ import { AppComponent } from './app/app.component';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
-import { AdminComponent } from './components/admin/admin.component';
-import { OrderAdminComponent } from './components/admin/order/order.admin.component';
-import { ProductAdminComponent } from './components/admin/product/product.admin.component';
-import { CategoryAdminComponent } from './components/admin/category/category.admin.component';
-import { DetailOrderAdminComponent } from './components/admin/detail-order/detail.order.admin.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { AdminModule } from './components/admin/admin.module';
+
+registerLocaleData(localeVi);
 
 @NgModule({
   declarations: [
@@ -61,6 +59,10 @@ import { AdminModule } from './components/admin/admin.module';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'vi-VN'
     }
   ],
   bootstrap: [AppComponent]
